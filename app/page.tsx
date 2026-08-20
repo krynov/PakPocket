@@ -7,7 +7,7 @@ import SavedLockers from '../components/SavedLockers';
 const DRAW_DATABASE = [
   { drawNo: "102", date: "15 Aug 2026", city: "Lahore", denomination: "1500", firstPrize: "177920", secondPrizes: ["045123", "882190", "310455"], thirdPrizes: ["177100", "177850", "177900", "177920", "177999", "250411", "901244"] },
   { drawNo: "98", date: "01 Jun 2026", city: "Karachi", denomination: "750", firstPrize: "482019", secondPrizes: ["112450", "981204", "551209"], thirdPrizes: ["112100", "112400", "482010", "482019", "601244"] },
-  { drawNo: "45", date: "15 Mar 2026", city: "Faisalabad", denomination: "200", firstPrize: "001289", secondPrizes: ["120944", "654109", "332109"], thirdPrizes: ["001200", "001280", "001289", "771029"] }
+  { drawNo: "45", date: "15 Mar 2026", city: "Faisalabad", denomination: "001289", secondPrizes: ["120944", "654109", "332109"], thirdPrizes: ["001200", "001280", "001289", "771029"] }
 ];
 
 export default function PakPocketHome() {
@@ -44,8 +44,13 @@ export default function PakPocketHome() {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then(() => setDeferredPrompt(null));
     } else {
-      alert("App is ready! Use 'Add to Home Screen' in your browser options.");
+      alert("PWA Install Ready! Agar popup nahi aya toh browser menu (three dots) mein ja kar 'Install PakPocket' ya 'Save to Desktop' select karein.");
     }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setActiveTab('bonds');
   };
 
   // Dynamic Text Highlighting Function
@@ -82,16 +87,29 @@ export default function PakPocketHome() {
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100 font-sans pb-20">
-      {/* Dynamic Header */}
+      {/* Dynamic Header with Navigation */}
       <header className="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-emerald-500/30">
+        <div 
+          onClick={scrollToTop} 
+          className="flex items-center space-x-3 cursor-pointer group"
+        >
+          <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition">
             P
           </div>
-          <span className="text-2xl font-black tracking-tight text-white">
-            Pak<span className="text-emerald-400">Pocket</span>
+          <span className="text-2xl font-black tracking-tight text-white group-hover:text-emerald-400 transition">
+            Pak<span className="text-emerald-400 group-hover:text-white">Pocket</span>
           </span>
         </div>
+
+        {/* Center Navigation Links (Desktop) */}
+        <nav className="hidden md:flex items-center space-x-6 text-sm font-semibold text-slate-300">
+          <button onClick={scrollToTop} className="hover:text-emerald-400 transition">Home</button>
+          <button onClick={() => { setActiveTab('bonds'); }} className="hover:text-emerald-400 transition">Marketplace <span className="bg-emerald-500 text-slate-950 text-[10px] font-bold px-1.5 py-0.5 rounded ml-1">NEW</span></button>
+          <button onClick={() => alert('Partner Program coming soon!')} className="hover:text-emerald-400 transition">Partner Program <span className="bg-amber-500 text-slate-950 text-[10px] font-bold px-1.5 py-0.5 rounded ml-1">EARN</span></button>
+          <button onClick={() => { setActiveTab('currency'); }} className="hover:text-emerald-400 transition">Pricing</button>
+          <button onClick={() => { setActiveTab('lockers'); }} className="hover:text-emerald-400 transition">Saved Lockers</button>
+        </nav>
+
         <div className="flex items-center space-x-3">
           <button onClick={handleInstallPWA} className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-sm transition shadow-md">
             Install App
@@ -323,51 +341,6 @@ export default function PakPocketHome() {
             </div>
           </div>
         )}
-
-        {/* APP DOWNLOAD & VISUAL MOCKUP SECTION */}
-        <section className="bg-gradient-to-br from-emerald-900 via-slate-900 to-slate-950 border border-slate-800 p-8 md:p-12 rounded-3xl my-16 flex flex-col md:flex-row items-center justify-between gap-10 shadow-2xl relative overflow-hidden">
-          <div className="flex-1 space-y-4 text-center md:text-left">
-            <span className="bg-emerald-500/20 text-emerald-300 text-xs font-bold px-3 py-1 rounded-full border border-emerald-500/30 uppercase">
-              100% Offline App
-            </span>
-            <h2 className="text-3xl md:text-4xl font-black text-white">
-              PakPocket Mobile App <br />
-              <span className="text-emerald-400">Install On Any Device</span>
-            </h2>
-            <p className="text-slate-300 text-sm md:text-base leading-relaxed">
-              Fast speed, zero data required, offline saved bond lockers, and camera scanner support.
-            </p>
-            <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
-              <button onClick={handleInstallPWA} className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl transition shadow-lg shadow-emerald-500/20">
-                Install Web App (PWA)
-              </button>
-              <button onClick={() => alert('APK Download link starting...')} className="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-6 py-3 rounded-xl border border-slate-700 transition">
-                Download Android APK
-              </button>
-            </div>
-          </div>
-
-          {/* Visual Mobile Screen Mockup */}
-          <div className="w-64 h-96 bg-slate-950 border-4 border-slate-700 rounded-[36px] p-4 flex flex-col justify-between shadow-2xl relative">
-            <div className="w-24 h-4 bg-slate-800 rounded-b-xl mx-auto -mt-4"></div>
-            <div className="space-y-3 pt-2 text-xs">
-              <div className="flex justify-between items-center text-emerald-400 font-bold border-b border-slate-800 pb-2">
-                <span>PakPocket Mobile</span>
-                <span className="bg-emerald-500/20 text-[9px] px-1.5 py-0.5 rounded text-emerald-300">OFFLINE</span>
-              </div>
-              <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800 font-mono text-[11px] text-emerald-300 font-bold">
-                Match Found: 177920
-              </div>
-              <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-slate-300 text-[11px]">
-                Saved Lockers: Active
-              </div>
-              <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-slate-300 text-[11px]">
-                Cash Counter: Rs. 248,500
-              </div>
-            </div>
-            <div className="w-20 h-1 bg-slate-700 rounded-full mx-auto"></div>
-          </div>
-        </section>
 
       </div>
     </main>
