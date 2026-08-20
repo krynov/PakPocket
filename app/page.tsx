@@ -7,9 +7,11 @@ import BondEngine from '../components/BondEngine';
 import SavedLockers from '../components/SavedLockers';
 import CurrencyConverter from '../components/CurrencyConverter';
 import CashCounter from '../components/CashCounter';
+import ContactSection from '../components/ContactSection';
+import FooterAndFeatures from '../components/FooterAndFeatures';
 
 export default function PakPocketHome() {
-  const [activeTab, setActiveTab] = useState<'bonds' | 'lockers' | 'currency' | 'cash'>('bonds');
+  const [activeTab, setActiveTab] = useState<'bonds' | 'lockers' | 'currency' | 'cash' | 'contact'>('bonds');
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   // Register PWA Service Worker
@@ -39,7 +41,7 @@ export default function PakPocketHome() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 font-sans pb-20">
+    <main className="min-h-screen bg-slate-950 text-slate-100 font-sans">
       {/* Dynamic Header Component */}
       <Header 
         scrollToTop={scrollToTop} 
@@ -47,19 +49,23 @@ export default function PakPocketHome() {
         handleInstallPWA={handleInstallPWA} 
       />
 
-      {/* Hero Section & Tabs Component */}
+      {/* Hero Section & Tabs Component with Hover Effects */}
       <Hero 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
       />
 
       {/* Main Content Dynamic Switching Area */}
-      <div className="max-w-6xl mx-auto px-6 mt-10">
+      <div className="max-w-6xl mx-auto px-6 mt-6">
         {activeTab === 'bonds' && <BondEngine />}
         {activeTab === 'lockers' && <SavedLockers />}
         {activeTab === 'currency' && <CurrencyConverter />}
         {activeTab === 'cash' && <CashCounter />}
+        {activeTab === 'contact' && <ContactSection />}
       </div>
+
+      {/* Features, Download Banner & Professional Footer */}
+      <FooterAndFeatures />
     </main>
   );
 }
