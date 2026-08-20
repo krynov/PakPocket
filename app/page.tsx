@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import SavedLockers from '../components/SavedLockers';
 
 // Mock Draw Database (20+ Years Sample)
 const DRAW_DATABASE = [
@@ -10,7 +11,7 @@ const DRAW_DATABASE = [
 ];
 
 export default function PakPocketHome() {
-  const [activeTab, setActiveTab] = useState<'bonds' | 'currency' | 'cash'>('bonds');
+  const [activeTab, setActiveTab] = useState<'bonds' | 'lockers' | 'currency' | 'cash'>('bonds');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDenom, setSelectedDenom] = useState('1500');
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -112,12 +113,18 @@ export default function PakPocketHome() {
         </p>
 
         {/* Navigation Tabs */}
-        <div className="flex justify-center gap-3 pt-6">
+        <div className="flex flex-wrap justify-center gap-3 pt-6">
           <button
             onClick={() => setActiveTab('bonds')}
             className={`px-5 py-2.5 rounded-xl font-bold text-sm transition ${activeTab === 'bonds' ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20' : 'bg-slate-900 text-slate-400 border border-slate-800'}`}
           >
             Prize Bond Engine
+          </button>
+          <button
+            onClick={() => setActiveTab('lockers')}
+            className={`px-5 py-2.5 rounded-xl font-bold text-sm transition ${activeTab === 'lockers' ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/20' : 'bg-slate-900 text-slate-400 border border-slate-800'}`}
+          >
+            Saved Lockers
           </button>
           <button
             onClick={() => setActiveTab('currency')}
@@ -140,7 +147,6 @@ export default function PakPocketHome() {
         {/* TAB 1: PRIZE BOND ENGINE */}
         {activeTab === 'bonds' && (
           <div className="space-y-8">
-            {/* Search Box */}
             <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-xl space-y-4">
               <div className="flex flex-col md:flex-row gap-4">
                 <input
@@ -165,7 +171,6 @@ export default function PakPocketHome() {
               </div>
             </div>
 
-            {/* Results Board */}
             <div className="space-y-6">
               <h2 className="text-xl font-bold text-slate-200">Draw Results & History</h2>
               {DRAW_DATABASE.filter(d => d.denomination === selectedDenom).map((draw, idx) => (
@@ -213,7 +218,10 @@ export default function PakPocketHome() {
           </div>
         )}
 
-        {/* TAB 2: CURRENCY CONVERTER */}
+        {/* TAB 2: SAVED LOCKERS */}
+        {activeTab === 'lockers' && <SavedLockers />}
+
+        {/* TAB 3: CURRENCY CONVERTER */}
         {activeTab === 'currency' && (
           <div className="max-w-xl mx-auto bg-slate-900 border border-slate-800 p-8 rounded-3xl space-y-6">
             <h2 className="text-2xl font-bold text-center text-white">Global Offline Currency Converter</h2>
@@ -280,7 +288,7 @@ export default function PakPocketHome() {
           </div>
         )}
 
-        {/* TAB 3: CASH COUNTER */}
+        {/* TAB 4: CASH COUNTER */}
         {activeTab === 'cash' && (
           <div className="max-w-2xl mx-auto bg-slate-900 border border-slate-800 p-8 rounded-3xl space-y-6">
             <h2 className="text-2xl font-bold text-center text-white">Pakistani Rupee Cash Counter</h2>
@@ -351,7 +359,7 @@ export default function PakPocketHome() {
                 Match Found: 177920
               </div>
               <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-slate-300 text-[11px]">
-                Saved Lockers: 12 Bonds
+                Saved Lockers: Active
               </div>
               <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800 text-slate-300 text-[11px]">
                 Cash Counter: Rs. 248,500
