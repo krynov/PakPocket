@@ -126,6 +126,11 @@ export default function FooterAndFeatures() {
               <li><a href="#contact" className="hover:text-emerald-400 transition">Contact</a></li>
               <li><a href="#results" className="hover:text-emerald-400 transition">Download Results</a></li>
               <li><a href="#schedule" className="hover:text-emerald-400 transition">Draw Schedule</a></li>
+              <li><a href="#marketplace" className="hover:text-emerald-400 transition">Marketplace</a></li>
+              <li className="flex items-center gap-2">
+                <a href="#partner" className="hover:text-emerald-400 transition">Partner Program</a>
+                <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[9px] font-extrabold px-1.5 py-0.5 rounded">EARN</span>
+              </li>
             </ul>
           </div>
 
